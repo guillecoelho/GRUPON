@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const client = new Discord.client();
 
+let prefix = process.env.PREFIX;
+
 client.on('ready', () => {
 	console.log('---------- Estoy listo! ----------');
 	client.user.setActivity('doname en PayPal o te mato', { type: 'WATCHING' });
@@ -18,10 +20,10 @@ client.on('messageDelete', (message) => {
 });
 
 client.on('message', (message) => {
-	if (message.content.startsWith(config.Prefix + 'ping')) {
+	if (message.content.startsWith(prefix + 'ping')) {
 		let ping = Math.floor(message.client.ws.ping);
 		message.channel.send(':ping_pong: `' + ping + ' ms.` desde heroku.');
 	}
 });
 
-client.login(config.Token);
+client.login(process.env.TOKEN);
