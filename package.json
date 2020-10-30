@@ -20,6 +20,9 @@
 	},
 	"homepage": "https://github.com/ElBoDeLaJusticia",
 	"dependencies": {
-		"discord.js": "^12.4.1"
+		"discord.js": "^12.4.1",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"ping-monitor": "^0.5.1"
 	}
 }
