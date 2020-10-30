@@ -1,28 +1,29 @@
 {
-	"name": "GRUPON",
-	"version": "1.0.0",
-	"description": "Todo el dia activo daaa",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/ElBoDeLaJusticia/GRUPON.git"
-	},
-	"keywords": [
-		"discord.js"
-	],
-	"author": "ElBoDeLaJusticia",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/ElBoDeLaJusticia/GRUPON/issues"
-	},
-	"homepage": "https://github.com/ElBoDeLaJusticia",
-	"dependencies": {
-		"discord.js": "^12.4.1",
-		"dotenv": "^8.2.0",
-		"express": "^4.17.1",
-		"ping-monitor": "^0.5.1"
-	}
+  "name": "GRUPON",
+  "version": "1.0.0",
+  "description": "Todo el dia activo daaa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElBoDeLaJusticia/GRUPON.git"
+  },
+  "keywords": [
+    "discord.js"
+  ],
+  "author": "ElBoDeLaJusticia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ElBoDeLaJusticia/GRUPON/issues"
+  },
+  "homepage": "https://github.com/ElBoDeLaJusticia",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "ping-monitor": "^0.5.1"
+  }
 }
