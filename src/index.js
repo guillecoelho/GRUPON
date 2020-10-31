@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const config = require('./config.json');
 
 require('dotenv').config();
 let prefix = process.env.PREFIX;
@@ -10,7 +11,7 @@ const Monitor = require('ping-monitor');
 
 keepAlive();
 const monitor = new Monitor({
-	website: 'https://DroopyRuddyHashmaps.elbodelajustici.repl.run',
+	website: 'https://Ping-GRUPON.elbodelajustici.repl.co',
 	title: 'Secundario',
 	interval: 15, // minutes
 });
@@ -30,7 +31,7 @@ client.on('ready', () => {
 });
 
 client.on('messageDelete', (message) => {
-	let channelMessage = client.channels.cache.get('430183973868797952');
+	let channelMessage = client.channels.cache.get(config.logchannel);
 	const embedDelMessage = new Discord.MessageEmbed()
 		.setTitle(`Un mensaje fue eliminado en ${message.channel.name}`)
 		.setColor('#f67766')
@@ -45,7 +46,7 @@ client.on('messageDelete', (message) => {
 client.on('messageUpdate', (oldMessage, newMessage) => {
 	if (oldMessage.author.bot) return;
 
-	let channelMessage = client.channels.cache.get('430183973868797952');
+	let channelMessage = client.channels.cache.get(config.logchannel);
 	let nameChannel = newMessage.channel.name;
 	let nameAuthor = newMessage.member.displayName;
 
