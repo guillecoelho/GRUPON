@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('./config.json');
+fs = require('fs');
+
 
 require('dotenv').config();
 let prefix = process.env.PREFIX;
@@ -25,40 +27,45 @@ monitor.on('error', (error) => console.log(error));
 
 client.on('ready', () => {
 	console.log('---------- Estoy listo! ----------');
-	client.user.setActivity('gr!help | doname en PayPal o te mato', {
+	client.user.setActivity('gr-help | doname en PayPal o te mato', {
 		type: 'WATCHING',
 	});
 });
 
 client.on('messageDelete', (message) => {
-	let channelMessage = client.channels.cache.get(config.logchannel);
-	const embedDelMessage = new Discord.MessageEmbed()
-		.setTitle(`Un mensaje fue eliminado en ${message.channel.name}`)
-		.setColor('#f67766')
-		.setDescription(
-			`El mensaje decia: ${message} \n Lo envio: ${message.member.displayName}`
-		)
-		.setFooter(`Nadie se escapa aca ;)`)
-		.setThumbnail(message.author.displayAvatarURL());
-	channelMessage.send({ embed: embedDelMessage });
+	if( config.recording == 1 ){
+    let channelMessage = client.channels.cache.get(config.logchannel);
+	  const embedDelMessage = new Discord.MessageEmbed()
+		  .setTitle(`Un mensaje fue eliminado en ${message.channel.name}`)
+		  .setColor('#f67766')
+	  	.setDescription(
+			`El mensaje decia: ${message} \n Lo envio: ${message.member.displayName}`)
+		  .setFooter(`Nadie se escapa aca ;)`)
+		  .setThumbnail(message.author.displayAvatarURL());
+	  channelMessage.send({ embed: embedDelMessage });
+  }
+  
 });
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
-	if (oldMessage.author.bot) return;
+	if( config.recording == 1 ){
+    if (oldMessage.author.bot) return;
 
-	let channelMessage = client.channels.cache.get(config.logchannel);
-	let nameChannel = newMessage.channel.name;
-	let nameAuthor = newMessage.member.displayName;
+	  let channelMessage = client.channels.cache.get(config.logchannel);
+	  let nameChannel = newMessage.channel.name;
+	  let nameAuthor = newMessage.member.displayName;
 
-	const embedDelMessage = new Discord.MessageEmbed()
-		.setTitle(`Un mensaje fue editado en ${nameChannel}`)
-		.setColor('#f67766')
-		.setDescription(
-			`El mensaje: '${oldMessage}' enviado por: ${nameAuthor} fue editado y ahora dice: '${newMessage}'`
-		)
-		.setFooter(`Nadie se escapa aca ;)`)
-		.setThumbnail(oldMessage.author.displayAvatarURL());
-	channelMessage.send({ embed: embedDelMessage });
+	  const embedDelMessage = new Discord.MessageEmbed()
+		  .setTitle(`Un mensaje fue editado en ${nameChannel}`)
+		  .setColor('#f67766')
+		  .setDescription(
+			  `El mensaje: '${oldMessage}' enviado por: ${nameAuthor} fue editado y ahora dice: '${newMessage}'`
+		  )
+		  .setFooter(`Nadie se escapa aca ;)`)
+		  .setThumbnail(oldMessage.author.displayAvatarURL());
+	  channelMessage.send({ embed: embedDelMessage });
+  }
+  
 });
 
 client.on('message', (message) => {
@@ -78,10 +85,17 @@ client.on('message', (message) => {
 		message.channel.send({ embed: embedDelMessage });
 	}
 
-	if (message.content.startsWith(prefix + 'ping')) {
+	if (message.content.startsWith(prefix + 'ping') && message.author.id == config.admin ) {
 		let ping = Math.floor(message.client.ws.ping);
-		message.channel.send(':ping_pong: `' + ping + ' ms.` desde repl.');
+		message.channel.send(ping + ' ms.');
 	}
+
+  if (message.content.startsWith(prefix + 'activate') && message.author.id == config.admin ) {
+
+    var archivo = fs.readFileSync('config.json');
+    console.log(archivo);
+	}
+
 });
 
 client.login(process.env.TOKEN);
