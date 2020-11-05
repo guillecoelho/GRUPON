@@ -90,12 +90,41 @@ client.on('message', (message) => {
 		message.channel.send(ping + ' ms.');
 	}
 
-  if (message.content.startsWith(prefix + 'activate') && message.author.id == config.admin ) {
+  if ( message.content.startsWith(prefix + 'activate') && message.author.id == config.admin ) {
+    
+    var archivo = fs.readFileSync(__dirname + '/config.json', {encoding:'utf8', flag:'r'});
 
-    var archivo = fs.readFileSync('config.json');
-    console.log(archivo);
-	}
+    if( archivo.includes('"recording": "0"') ){
+      archivo = archivo.replace('"recording": "0"', '"recording": "1"');
 
+      fs.writeFileSync(__dirname + '/config.json', archivo, function(err) {
+        if (err) throw err;
+        console.log("Wrote sitemap to XML");
+      });
+
+      message.channel.send('El bot ha sido activado.');
+    }else{
+      message.channel.send('El bot ya estaba activado. No estaba funcionando?');
+    }
+
+	}else if( message.content.startsWith(prefix + 'desactivate') && message.author.id == config.admin ){
+    
+    var archivo = fs.readFileSync(__dirname + '/config.json', {encoding:'utf8', flag:'r'});
+
+    if( archivo.includes('"recording": "1"') ){
+      archivo = archivo.replace('"recording": "1"', '"recording": "0"');
+
+      fs.writeFileSync(__dirname + '/config.json', archivo, function(err) {
+        if (err) throw err;
+        console.log("Wrote sitemap to XML");
+      });
+
+      message.channel.send('El bot ha sido desactivado.');
+    }else{
+      message.channel.send('El bot ya estaba desactivado. Estaba funcionando?');
+    }
+
+  }
 });
 
 client.login(process.env.TOKEN);
